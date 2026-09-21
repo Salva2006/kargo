@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Juego KARGO</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Dash Kargo</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="gameCanvas" width="480" height="320"></canvas>
-
-  <!-- Botón volver a jugar -->
-  <button id="btnRestart" class="btn-restart">🔄 Volver a jugar</button>
-
-  <!-- Controles táctiles para celular -->
-  <div class="mobile-controls">
-    <button id="btnLeft">⬅️</button>
-    <button id="btnJump">⤴️</button>
-    <button id="btnRight">➡️</button>
-  </div>
-
-  <script src="game.js"></script>
+<div id="gameContainer">
+<canvas id="game"></canvas>
+<div id="hud">
+<div id="score">0 / 100</div>
+<div id="coins">💰 0 / 3</div>
+</div>
+<div id="winScreen" class="hidden">
+<h1>¡META ALCANZADA!</h1>
+<p id="discountText"></p>
+<div id="couponBox">
+<span id="couponCode">KARGO10-XXXX</span>
+<button id="copyBtn">COPIAR</button>
+</div>
+<a id="waBtn" target="_blank">CANJEAR POR WHATSAPP</a>
+<button class="restart" onclick="location.reload()">VOLVER A JUGAR</button>
+</div>
+<div id="loseScreen" class="hidden">
+<h2>Game Over</h2>
+<button class="restart" onclick="location.reload()">REINTENTAR</button>
+</div>
+</div>
+<script src="game.js"></script>
 </body>
 </html>
