@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KARGO RUN - Gana hasta 10% OFF</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🎮 KARGO RUN</h1>
+<p class="subtitle">¡Corre y desbloquea hasta <span id="discount">0% DESCUENTO</span> en cualquier producto!</p>
+
+<div class="bar-container">
+  <div class="bar" id="bar"></div>
+  <div class="bar-text" id="bar-text">0% / 10% máximo</div>
+</div>
+
+<canvas id="game" width="600" height="350"></canvas>
+
+<p class="controls">Presiona <b>ESPACIO</b> para saltar | <b>R</b> para reiniciar</p>
+<p>Puntos: <span id="score">0</span></p>
+
+<div id="win-modal" class="hidden">
+  <h2>¡DESCUENTO DESBLOQUEADO!</h2>
+  <p id="final-text"></p>
+  <a id="wa-link" href="#" target="_blank" class="btn">Canjear por WhatsApp</a>
+  <p class="small">Válido para cualquier producto Kargo</p>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
