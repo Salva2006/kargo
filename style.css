@@ -1,24 +1,19 @@
-/* Estilos generales */
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f4f4f4;
     color: #333;
 }
-
-/* Encabezado */
 header {
     background: linear-gradient(180deg, #1a1a1a, #2a2a2a);
-    padding: 20px 0;
+    padding: 15px 0;
     text-align: center;
 }
-
 header .logo img {
-    height: 140px;
+    height: 80px;
     display: block;
     margin: 0 auto 15px auto;
 }
-
 header nav ul {
     list-style: none;
     padding: 0;
@@ -26,197 +21,187 @@ header nav ul {
     display: flex;
     justify-content: center;
     gap: 40px;
+    flex-wrap: wrap;
 }
-
 header nav ul li a {
     text-decoration: none;
     color: #ffffff;
     font-size: 18px;
     font-weight: 500;
-    transition: color 0.3s ease;
 }
-
 header nav ul li a:hover {
     color: #ff6600;
 }
-
-/* Hero */
 .hero {
     text-align: center;
     padding: 60px 20px;
     background-color: #eaeaea;
 }
-
 .hero h1 {
     font-size: 42px;
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 15px;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    letter-spacing: 1px;
 }
-
 .hero p {
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
-
-.hero a {
-    display: inline-block;
-    background-color: #ff6600;
-    color: #fff;
-    padding: 12px 25px;
+.botones-whatsapp {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #25D366;
+    color: #fff !important;
+    padding: 12px 28px;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 16px;
 }
-
-.hero a:hover {
-    background-color: #cc5200;
+.icon-wa {
+    width: 22px;
+    height: 22px;
+    fill: white;
 }
-
-/* Productos */
+.btn-whatsapp.socio {
+    background-color: #0a3d62;
+}
 .productos {
     padding: 40px;
     text-align: center;
 }
-
 .productos h2 {
     font-size: 28px;
     margin-bottom: 30px;
 }
-
 .grid {
     display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
 }
-
 .card {
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     width: 250px;
+    display: flex;
+    flex-direction: column;
 }
-
 .card img {
     max-width: 100%;
     border-radius: 5px;
     margin-bottom: 15px;
 }
-
 .card h3 {
     font-size: 20px;
     margin: 0;
 }
-
 .precio {
     font-weight: bold;
     margin: 10px 0;
+    font-size: 18px;
+    color: #ff6600;
 }
-
+.card p {
+    flex-grow: 1;
+}
+.botones-compra {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
 .btn-comprar {
-    display: inline-block;
+    flex: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     background-color: #1a1a1a;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 5px;
     text-decoration: none;
     border-radius: 4px;
-    transition: background 0.3s ease;
-}
-
-.btn-comprar:hover {
-    background-color: #ff6600;
-}
-
-/* Sección de confianza */
-.confianza {
-    padding: 50px 20px;
-    background-color: #fff;
+    font-size: 13px;
+    font-weight: bold;
     text-align: center;
 }
-
-.confianza h2 {
-    font-size: 28px;
-    margin-bottom: 30px;
-    color: #1a1a1a;
+.btn-comprar.socio {
+    background-color: #0a3d62;
 }
-
-.confianza-grid {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.confianza-card {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    width: 250px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.confianza-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.confianza-card h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.confianza-card p {
-    font-size: 16px;
-    color: #555;
-}
-
-/* Sección del juego */
 .juego {
-    padding: 50px 20px;
-    background-color: #fff;
+    padding: 60px 20px;
+    background-color: #ffffff;
     text-align: center;
     margin-top: 40px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
 }
-
 .juego h2 {
-    font-size: 28px;
+    font-size: 32px;
     margin-bottom: 15px;
     color: #1a1a1a;
+    display: block;
 }
-
 .juego p {
     font-size: 18px;
     margin-bottom: 25px;
     color: #555;
+    display: block;
 }
-
 .btn-juego {
     display: inline-block;
     background-color: #ff6600;
     color: #fff;
-    padding: 14px 30px;
+    padding: 16px 35px;
     text-decoration: none;
-    border-radius: 6px;
-    font-size: 18px;
+    border-radius: 8px;
+    font-size: 20px;
     font-weight: bold;
-    transition: background 0.3s ease, transform 0.2s ease;
 }
-
 .btn-juego:hover {
     background-color: #cc5200;
-    transform: scale(1.05);
 }
-
-/* Pie de página */
+.seguimiento {
+    padding: 40px 20px;
+    background: #f9f9f9;
+    text-align: center;
+}
+.progress-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.progress-step {
+    background: #ddd;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+.progress-step.active {
+    background: #25D366;
+    color: white;
+}
 footer {
     background-color: #1a1a1a;
     color: #fff;
     text-align: center;
     padding: 15px 0;
     margin-top: 40px;
+}
+@media (max-width: 600px) {
+    header .logo img { height: 60px; }
+    .hero h1 { font-size: 28px; }
+    .botones-whatsapp { flex-direction: column; align-items: center; }
+    .btn-whatsapp { width: 80%; justify-content: center; }
 }
