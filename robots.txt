@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://salva2006.github.io/kargo/sitemap.xml
