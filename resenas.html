@@ -1,67 +1,153 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reseñas - KARGO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reseñas KARGO</title>
 <style>
- body{font-family:Arial;background:#f5f5f5;margin:0;padding:20px}
-.caja{max-width:600px;margin:0 auto 20px;background:white;padding:20px;border-radius:15px;box-shadow:0 2px 10px #0001}
- input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-top:10px;box-sizing:border-box}
- button{width:100%;padding:13px;background:black;color:white;border:none;border-radius:10px;margin-top:15px;font-weight:bold;cursor:pointer}
-.volver{display:inline-block;background:white;padding:10px 15px;border-radius:20px;text-decoration:none;color:black;font-weight:bold;box-shadow:0 1px 5px #0002}
-#preview{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
+body{font-family:Arial,sans-serif;max-width:700px;margin:20px auto;padding:15px;background:#f9f9f9}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.1);margin-bottom:20px}
+input,textarea,select{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+button{width:100%;padding:12px;background:black;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+button:disabled{background:#999}
+.estrellas{font-size:28px;cursor:pointer;color:#ddd}
+.estrellas.active{color:#ffb400}
+.resena{background:white;padding:15px;border-radius:10px;margin:10px 0}
+.resena img{max-width:100%;border-radius:8px;margin-top:10px}
+#estado{margin:10px 0;font-weight:bold;text-align:center}
 </style>
 </head>
 <body>
-<div style="max-width:600px;margin:0 auto 20px;"><a href="index.html" class="volver">← Volver a la tienda</a></div>
-<div class="caja">
-<h2 style="text-align:center;margin:0">¿Qué dicen de KARGO? 🔥</h2>
-<p style="text-align:center;color:gray;font-size:13px">Reseñas reales con foto</p>
-<hr style="margin:15px 0;border:none;border-top:1px solid #eee">
-<b>Deja tu reseña</b><div style="font-size:28px;color:#ffc107">★★★★★</div>
-<input id="nombre" placeholder="Tu nombre">
-<select id="producto" required><option>Cargando productos...</option></select>
-<textarea id="comentario" placeholder="¿Qué te pareció tu producto KARGO?"></textarea>
-<input type="file" id="fotoInput" accept="image/*">
-<img id="preview">
-<button id="btnEnviar">Enviar reseña con foto</button>
-<p id="msg" style="display:none;color:green;text-align:center;font-weight:bold;margin-top:10px;"></p>
+
+<a href="index.html">← Volver a la tienda</a>
+<h2>¿Qué dicen de KARGO? 🔥</h2>
+<p>Reseñas reales con foto</p>
+
+<div class="card">
+<h3>Deja tu reseña</h3>
+<div id="stars">
+<span class="estrellas" data-v="1">★</span>
+<span class="estrellas" data-v="2">★</span>
+<span class="estrellas" data-v="3">★</span>
+<span class="estrellas" data-v="4">★</span>
+<span class="estrellas" data-v="5">★</span>
 </div>
-<div id="lista" style="max-width:600px;margin:0 auto;"></div>
+<input id="nombre" placeholder="Tu nombre ej: Sheila">
+<input id="producto" placeholder="¿Qué producto compraste? ej: Set de bloques WALL-E">
+<textarea id="comentario" placeholder="¿Qué te pareció?"></textarea>
+<input type="file" id="fotoFile" accept="image/*">
+<div id="estado"></div>
+<button id="btnEnviar">Enviar reseña con foto</button>
+</div>
+
+<div id="listaResenas">Cargando reseñas...</div>
+
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbw_qSzItDB5F-rcWKoT6Bi6Ihm5RalG5aP842f3Eh3h4XXqIRwiI7IMoOXYzgUO2Vx4TQ/exec";
-let fotoBase64="", fotoNombre="", fotoTipo="";
-document.getElementById('fotoInput').addEventListener('change', e=>{
- const f=e.target.files[0]; if(!f) return; fotoNombre=f.name; fotoTipo=f.type;
- const r=new FileReader(); r.onload=ev=>{fotoBase64=ev.target.result; document.getElementById('preview').src=fotoBase64; document.getElementById('preview').style.display='block';}; r.readAsDataURL(f);
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_qSzItDB5F-rcWKoT6Bi6Ihm5RalG5aP842f3Eh3h4XXqIRwiI7IMoOXYzgUO2Vx4TQ/exec';
+let estrellasSel = 5;
+
+// Estrellas
+document.querySelectorAll('.estrellas').forEach(s=>{
+ s.addEventListener('click',()=>{
+  estrellasSel = parseInt(s.dataset.v);
+  pintarEstrellas();
+ });
 });
-async function cargarProductosReales(){
- const select=document.getElementById('producto');
+function pintarEstrellas(){
+ document.querySelectorAll('.estrellas').forEach(s=>{
+  s.classList.toggle('active', parseInt(s.dataset.v) <= estrellasSel);
+ });
+}
+pintarEstrellas();
+
+// Comprimir foto
+function comprimirFoto(file){
+ return new Promise((resolve)=>{
+  const reader = new FileReader();
+  reader.onload = e=>{
+   const img = new Image();
+   img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    const max = 800;
+    let w = img.width, h = img.height;
+    if(w>max || h>max){
+     if(w>h){ h = h*max/w; w=max; } else { w = w*max/h; h=max; }
+    }
+    canvas.width=w; canvas.height=h;
+    canvas.getContext('2d').drawImage(img,0,0,w,h);
+    resolve(canvas.toDataURL('image/jpeg',0.7));
+   };
+   img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+ });
+}
+
+// Cargar reseñas
+async function cargarResenas(){
  try{
-  const resp=await fetch('index.html?v='+Date.now()); const html=await resp.text();
-  const prohibidos=["KARGO -","Productos Destacados","Tienda Online","Productos que","Mejoran tu Día","Volver a la tienda","Inicio","Contacto","Ofertas","WhatsApp","JUEGA Y GANA"];
-  let nombres=[]; const regex=/<h3[^>]*>([^<]{3,50})<\/h3>/gi; let m;
-  while((m=regex.exec(html))!==null){let n=m[1].trim(); if(prohibidos.some(p=>n.includes(p))) continue; if(n.length>=3 && n.length<=45) nombres.push(n);}
-  nombres=[...new Set(nombres)];
-  if(nombres.length<2) nombres=["Set de bloques WALL-E","Drone E88","Cinturón de nailon","Cargador solar portátil"];
-  select.innerHTML='<option value="">-- Elige tu producto *OBLIGATORIO* --</option>'+nombres.map(n=>`<option value="${n}">${n}</option>`).join('')+'<option value="Otro">Otro</option>';
- }catch(e){ select.innerHTML='<option value="">-- Elige tu producto *OBLIGATORIO* --</option><option>Set de bloques WALL-E</option><option>Drone E88</option><option>Cinturón de nailon</option><option>Cargador solar portátil</option>';}
+  const r = await fetch(SCRIPT_URL);
+  const data = await r.json();
+  const cont = document.getElementById('listaResenas');
+  if(!data.length){ cont.innerHTML='Aún no hay reseñas'; return; }
+  cont.innerHTML = data.reverse().map(d=>`
+   <div class="resena">
+    <b>${d.nombre}</b> - ${'★'.repeat(d.estrellas)} <small>${d.producto}</small><br>
+    ${d.comentario}<br>
+    ${d.foto? `<img src="${d.foto}" loading="lazy">` : ''}
+   </div>
+  `).join('');
+ }catch(e){ document.getElementById('listaResenas').innerHTML='Error cargando reseñas'; }
 }
-cargarProductosReales();
-async function cargar(){
- try{const r=await fetch(API_URL); const data=await r.json();
- document.getElementById('lista').innerHTML=data.reverse().map(d=>`<div class="caja"><b>${d.nombre||'Anónimo'}</b> <span style="color:#ffc107">${'★'.repeat(d.estrellas||5)}</span> <span style="background:#eee;font-size:12px;padding:3px 8px;border-radius:10px;margin-left:5px">${d.producto||''}</span><p style="margin:10px 0 0">${d.comentario}</p>${d.foto?`<img src="${d.foto}" style="width:100%;border-radius:10px;margin-top:10px">`:''}<br><small style="color:gray">${d.fecha||''}</small></div>`).join('');}catch(e){}
-}
-cargar();
-document.getElementById('btnEnviar').addEventListener('click',async()=>{
- const nombre=document.getElementById('nombre').value.trim();
- const producto=document.getElementById('producto').value;
- const comentario=document.getElementById('comentario').value.trim();
- if(!nombre||!comentario){alert('Pon tu nombre y comentario pe');return;}
- if(!producto){alert('¡TIENES QUE ELEGIR UN PRODUCTO!');return;}
- const btn=document.getElementById('btnEnviar'); btn.textContent='Subiendo...';
- await fetch(API_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({fecha:new Date().toLocaleString('es-PE'),nombre,producto,estrellas:5,comentario,fotoData:fotoBase64,fotoNombre:fotoNombre,fotoTipo:fotoTipo})});
- document.getElementById('msg').style.display='block'; document.getElementById('msg').textContent='¡Reseña con foto guardada! 🔥';
- setTimeout(()=>{cargar(); btn.textContent='Enviar reseña con foto';},1500);
+cargarResenas();
+
+// Enviar
+document.getElementById('btnEnviar').addEventListener('click', async ()=>{
+ const btn = document.getElementById('btnEnviar');
+ const estado = document.getElementById('estado');
+ const nombre = document.getElementById('nombre').value.trim();
+ const producto = document.getElementById('producto').value.trim();
+ const comentario = document.getElementById('comentario').value.trim();
+ const file = document.getElementById('fotoFile').files[0];
+
+ if(!nombre ||!comentario){ alert('Pon tu nombre y comentario'); return; }
+
+ btn.disabled=true;
+ estado.style.color='black';
+ estado.textContent='Subiendo... espera 5 seg';
+
+ let fotoData = "";
+ if(file){
+  fotoData = await comprimirFoto(file);
+ }
+
+ try{
+  const resp = await fetch(SCRIPT_URL, {
+   method:'POST',
+   body: JSON.stringify({
+    fecha: new Date().toLocaleString('es-PE'),
+    nombre, producto, estrellas: estrellasSel, comentario, fotoData
+   })
+  });
+  const json = await resp.json();
+  if(json.ok){
+   estado.style.color='green';
+   estado.textContent='¡Reseña con foto guardada! 🔥';
+   document.getElementById('nombre').value='';
+   document.getElementById('producto').value='';
+   document.getElementById('comentario').value='';
+   document.getElementById('fotoFile').value='';
+   cargarResenas();
+  }else{
+   throw new Error(json.error);
+  }
+ }catch(err){
+  estado.style.color='red';
+  estado.textContent='Error: '+err.message;
+ }finally{
+  btn.disabled=false;
+ }
 });
-</script></body></html>
+</script>
+</body>
+</html>
