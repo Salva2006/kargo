@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="LogoKargo.png" alt="Logo KARGO">
+    <header style="flex-direction: column; gap: 10px; padding: 10px 0 15px 0;">
+        <div class="logo" style="justify-content: center;">
+            <img src="LogoKargo.png" alt="Logo KARGO" style="height: 60px;">
         </div>
         <nav>
             <ul>
-                <li><a href="#">Inicio</a></li>
+                <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#productos">Productos</a></li>
-                <li><a href="#">Ofertas</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="#ofertas">Ofertas</a></li>
+                <li><a href="resenas.html" target="_blank" style="color: #ff6600; font-weight: 900;">Reseñas</a></li>
+                <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
     </header>
@@ -28,17 +29,15 @@
         <span>⚡ Atención 24/7 por WhatsApp</span>
     </div>
 
-    <section class="hero">
+    <section class="hero" id="inicio">
         <h1>KARGO - Productos que Mejoran tu Día a Día</h1>
         <p>Artículos modernos, resistentes y útiles para tu vida cotidiana</p>
         <div class="botones-whatsapp">
-            <a href="https://wa.me/51967414343?text=Hola%20KARGO" class="btn-whatsapp" target="_blank">
-                <svg viewBox="0 0 32 32" class="icon-wa"><path fill="currentColor" d="M16 3C8.8 3 3 8.8 3 16c0 2.5.7 4.9 2 7L3 29l6.3-1.7A12.9 12.9 0 0 0 16 29c7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.3c-2.1 0-4.2-.6-6-1.6l-.4-.2-3.7 1 1-3.6-.3-.4a10.4 10.4 0 0 1 9.4-16c5.7 0 10.4 4.6 10.4 10.4 0 5.7-4.7 10.4-10.4 10.4zm5.7-7.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.4.1-.1.2-.3.2-.4.1-.2 0-.3 0-.4 0-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.2.2-1 .9-1 2.3s1 2.6 1.2 2.8c.1.2 2 3.1 5 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
-                Línea 1
+            <a href="https://wa.me/51967414343?text=Hola%20KARGO%20quiero%20info" class="btn-whatsapp" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA"> WHATSAPP | LÍNEA 1
             </a>
-            <a href="https://wa.me/51974541722?text=Hola%20KARGO" class="btn-whatsapp socio" target="_blank">
-                <svg viewBox="0 0 32 32" class="icon-wa"><path fill="currentColor" d="M16 3C8.8 3 3 8.8 3 16c0 2.5.7 4.9 2 7L3 29l6.3-1.7A12.9 12.9 0 0 0 16 29c7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.3c-2.1 0-4.2-.6-6-1.6l-.4-.2-3.7 1 1-3.6-.3-.4a10.4 10.4 0 0 1 9.4-16c5.7 0 10.4 4.6 10.4 10.4 0 5.7-4.7 10.4-10.4 10.4zm5.7-7.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.4.1-.1.2-.3.2-.4.1-.2 0-.3 0-.4 0-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.2.2-1 .9-1 2.3s1 2.6 1.2 2.8c.1.2 2 3.1 5 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
-                Línea 2
+            <a href="https://wa.me/51974541722?text=Hola%20KARGO%20quiero%20info" class="btn-whatsapp socio" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA"> WHATSAPP | LÍNEA 2
             </a>
         </div>
     </section>
@@ -47,67 +46,53 @@
         <h2>Productos Destacados</h2>
         <div class="grid">
             <div class="card">
-                <img src="walle.png" alt="Set de bloques WALL-E">
+                <img src="walle.png" alt="WALL-E">
                 <h3>Set de bloques WALL-E</h3>
                 <div class="precio">S/ 25</div>
-                <p>Hecho de ABS resistente. Ideal para decorar o regalar.</p>
-                <div class="botones-compra">
-                    <a href="https://wa.me/51967414343?text=Quiero%20WALL-E" class="btn-comprar" target="_blank">Línea 1</a>
-                    <a href="https://wa.me/51974541722?text=Quiero%20WALL-E" class="btn-comprar socio" target="_blank">Línea 2</a>
-                </div>
+                <p>Hecho de ABS resistente.</p>
+                <a href="https://wa.me/51967414343" class="btn-comprar">Comprar por WhatsApp</a>
             </div>
             <div class="card">
-                <img src="drone.png" alt="Drone E88">
+                <img src="drone.png" alt="Drone">
                 <h3>Drone E88</h3>
                 <div class="precio">S/ 115</div>
-                <p>Doble cámara, Wi-Fi y retorno con un clic.</p>
-                <div class="botones-compra">
-                    <a href="https://wa.me/51967414343?text=Quiero%20Drone" class="btn-comprar" target="_blank">Línea 1</a>
-                    <a href="https://wa.me/51974541722?text=Quiero%20Drone" class="btn-comprar socio" target="_blank">Línea 2</a>
-                </div>
+                <p>Doble cámara, Wi-Fi, plegable.</p>
+                <a href="https://wa.me/51967414343" class="btn-comprar">Comprar por WhatsApp</a>
             </div>
             <div class="card">
-                <img src="cinturon.png" alt="Cinturón de nailon">
+                <img src="cinturon.png" alt="Cinturón">
                 <h3>Cinturón de nailon</h3>
                 <div class="precio">S/ 16</div>
-                <p>Varios colores. Ideal para jeans y uso diario.</p>
-                <div class="botones-compra">
-                    <a href="https://wa.me/51967414343?text=Quiero%20Cinturon" class="btn-comprar" target="_blank">Línea 1</a>
-                    <a href="https://wa.me/51974541722?text=Quiero%20Cinturon" class="btn-comprar socio" target="_blank">Línea 2</a>
-                </div>
+                <p>Varios colores, hebilla metálica.</p>
+                <a href="https://wa.me/51967414343" class="btn-comprar">Comprar por WhatsApp</a>
             </div>
             <div class="card">
-                <img src="cargador.png" alt="Cargador solar">
+                <img src="cargador.png" alt="Cargador">
                 <h3>Cargador solar portátil</h3>
                 <div class="precio">S/ 55</div>
-                <p>10,000 mAh, USB-C, linterna LED y brújula.</p>
-                <div class="botones-compra">
-                    <a href="https://wa.me/51967414343?text=Quiero%20Cargador" class="btn-comprar" target="_blank">Línea 1</a>
-                    <a href="https://wa.me/51974541722?text=Quiero%20Cargador" class="btn-comprar socio" target="_blank">Línea 2</a>
-                </div>
+                <p>10,000 mAh, USB-C.</p>
+                <a href="https://wa.me/51967414343" class="btn-comprar">Comprar por WhatsApp</a>
             </div>
         </div>
     </section>
 
-    <section class="juego">
+    <section class="juego" id="ofertas">
         <h2>🎮 Juega y Gana Descuentos</h2>
-        <p>Diviértete y obtén un 10% de descuento en tu compra.</p>
+        <p>Diviértete y obtén 10% de descuento en tu compra</p>
         <a href="./juego/index.html" class="btn-juego">🎮 JUGAR Y GANAR 10%</a>
-    </section>
-
-    <section class="seguimiento">
-        <h2>📦 Estado de tu pedido</h2>
-        <div class="progress-container">
-            <div class="progress-step active">Pedido confirmado</div>
-            <div class="progress-step">Empaquetando</div>
-            <div class="progress-step">En camino</div>
-            <div class="progress-step">Entregado</div>
+        <div class="pedido">
+            <h4>📦 Estado de tu pedido</h4>
+            <div class="estados">
+                <span class="estado activo">Pedido Confirmado</span>
+                <span class="estado">En camino</span>
+                <span class="estado">Entregado</span>
+            </div>
+            <p class="aviso">"Compra hoy, porque mañana puede ser tarde."</p>
         </div>
     </section>
 
-    <footer>
-        <p>✨ “Compra hoy, porque mañana puede ser tarde.” ✨</p>
-        <small>© 2026 KARGO - Todos los derechos reservados</small>
+    <footer id="contacto">
+        <p>© 2026 KARGO - Todos los derechos reservados - Lima / Pto Maldonado</p>
     </footer>
 </body>
 </html>

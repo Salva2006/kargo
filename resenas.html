@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reseñas - KARGO</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header style="background:#fff;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;">
+<a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#000;font-weight:bold"><img src="LogoKargo.png" style="height:40px"> KARGO</a>
+<a href="index.html" style="text-decoration:none;color:#333">⬅ Volver a Inicio</a>
+</header>
+<div style="max-width:1100px;margin:40px auto;padding:20px;text-align:center">
+<h1>⭐ Reseñas de Clientes KARGO</h1>
+<p>Opiniones reales con fotos - Lima y Puerto Maldonado</p>
+<button id="btnAbrir" style="background:#111;color:#fff;border:none;padding:14px 28px;border-radius:30px;font-weight:bold;cursor:pointer;margin:20px 0">✍️ Escribir mi reseña</button>
+<div id="listaResenas" style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px"></div>
+</div>
+
+<div id="modalResena" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.6)">
+<div style="background:#fff;margin:5% auto;padding:25px;border-radius:15px;width:90%;max-width:450px;position:relative">
+<span id="btnCerrar" style="position:absolute;right:15px;top:10px;font-size:28px;cursor:pointer">&times;</span>
+<h3>Deja tu reseña KARGO</h3>
+<form id="formResena">
+<input type="text" id="nombre" placeholder="Tu nombre Ej: Juan de Lima" required style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:8px">
+<select id="producto" required style="width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:8px"><option value="">Selecciona Producto</option><option>Drone E88</option><option>Cinturón de nailon</option><option>Cargador solar portátil</option><option>Set de bloques WALL-E</option><option>Otro producto</option></select>
+<div id="stars" style="margin:10px 0"><span data-s="1" style="font-size:32px;cursor:pointer;color:#ff9900">★</span><span data-s="2" style="font-size:32px;cursor:pointer;color:#ff9900">★</span><span data-s="3" style="font-size:32px;cursor:pointer;color:#ff9900">★</span><span data-s="4" style="font-size:32px;cursor:pointer;color:#ff9900">★</span><span data-s="5" style="font-size:32px;cursor:pointer;color:#ff9900">★</span></div>
+<textarea id="comentario" placeholder="¿Qué te pareció el producto?" required style="width:100%;padding:10px;height:80px;border:1px solid #ddd;border-radius:8px"></textarea>
+<label style="display:block;margin-top:10px;font-size:13px;text-align:left">Sube foto de tu producto (opcional)</label>
+<input type="file" id="foto" accept="image/*" style="margin-top:5px"><div id="preview"></div>
+<button type="submit" style="width:100%;background:#25D366;color:#fff;border:none;padding:14px;border-radius:10px;font-weight:bold;margin-top:15px;cursor:pointer">Publicar reseña</button>
+</form>
+</div>
+</div>
+
+<script>
+let estrellas=5, imgB64="";
+const modal=document.getElementById('modalResena');
+document.getElementById('btnAbrir').onclick=()=>modal.style.display='block';
+document.getElementById('btnCerrar').onclick=()=>modal.style.display='none';
+window.onclick=(e)=>{if(e.target==modal)modal.style.display='none'}
+document.querySelectorAll('#stars span').forEach(s=>{
+ s.onclick=()=>{
+  estrellas=parseInt(s.dataset.s);
+  document.querySelectorAll('#stars span').forEach((x,i)=>{x.style.color=i<estrellas?'#ff9900':'#ddd'});
+ }
+});
+document.getElementById('foto').addEventListener('change',e=>{
+ const f=e.target.files[0]; if(!f)return;
+ const r=new FileReader();
+ r.onload=ev=>{imgB64=ev.target.result; document.getElementById('preview').innerHTML=`<img src="${imgB64}" style="width:100%;border-radius:8px;margin-top:10px;max-height:180px;object-fit:cover">`};
+ r.readAsDataURL(f);
+});
+document.getElementById('formResena').addEventListener('submit',e=>{
+ e.preventDefault();
+ const nombre=document.getElementById('nombre').value;
+ const producto=document.getElementById('producto').value;
+ const comentario=document.getElementById('comentario').value;
+ const div=document.createElement('div');
+ div.style.cssText='background:#fff;border:1px solid #eee;border-radius:12px;padding:18px;width:300px;text-align:left;box-shadow:0 2px 10px rgba(0,0,0,0.05)';
+ div.innerHTML=`<div style="display:flex;justify-content:space-between"><span style="color:#ff9900">${'★'.repeat(estrellas)}</span><span style="font-size:11px;background:#e6f9ec;color:#0a7a2e;padding:3px 8px;border-radius:10px">✅ Verificada</span></div><p style="margin:10px 0">"${comentario}"</p>${imgB64?`<img src="${imgB64}" style="width:100%;border-radius:8px;margin:10px 0;max-height:180px;object-fit:cover">`:''}<small><b>${nombre}</b> - ${producto}</small>`;
+ document.getElementById('listaResenas').prepend(div);
+ let rs=JSON.parse(localStorage.getItem('kargo_resenas')||'[]'); rs.unshift({nombre,producto,comentario,estrellas,imgB64}); localStorage.setItem('kargo_resenas',JSON.stringify(rs));
+ modal.style.display='none'; e.target.reset(); imgB64=''; document.getElementById('preview').innerHTML='';
+ alert('¡Reseña publicada!');
+});
+window.onload=()=>{
+ let rs=JSON.parse(localStorage.getItem('kargo_resenas')||'[]');
+ const cont=document.getElementById('listaResenas');
+ if(rs.length==0){
+  cont.innerHTML=`<div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:18px;width:300px;text-align:left"><span style="color:#ff9900">★★★★★</span><p>"El drone llegó a Pto Maldonado en 2 días, bravazo!"</p><small><b>Carlos R.</b> - Drone E88</small></div><div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:18px;width:300px;text-align:left"><span style="color:#ff9900">★★★★★</span><p>"El cinturón muy buena calidad por 16 soles."</p><small><b>Maria L.</b> - Cinturón</small></div>`;
+ }else{
+  rs.forEach(r=>{
+   const d=document.createElement('div'); d.style.cssText='background:#fff;border:1px solid #eee;border-radius:12px;padding:18px;width:300px;text-align:left;box-shadow:0 2px 10px rgba(0,0,0,0.05)';
+   d.innerHTML=`<span style="color:#ff9900">${'★'.repeat(r.estrellas)}</span><p>"${r.comentario}"</p>${r.imgB64?`<img src="${r.imgB64}" style="width:100%;border-radius:8px;margin:10px 0">`:''}<small><b>${r.nombre}</b> - ${r.producto}</small>`;
+   cont.appendChild(d);
+  });
+ }
+};
+</script>
+</body>
+</html>
