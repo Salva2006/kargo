@@ -5,14 +5,20 @@ body {
     color: #333;
 }
 header {
-    background: linear-gradient(180deg, #1a1a1a, #2a2a2a);
-    padding: 15px 0;
+    background: #ffffff;
+    padding: 12px 0 15px 0;
     text-align: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #eee;
 }
 header .logo img {
-    height: 80px;
+    height: 75px;
     display: block;
-    margin: 0 auto 15px auto;
+    margin: 0 auto 12px auto;
+    width: auto;
 }
 header nav ul {
     list-style: none;
@@ -25,12 +31,25 @@ header nav ul {
 }
 header nav ul li a {
     text-decoration: none;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 500;
+    color: #111111;
+    font-size: 17px;
+    font-weight: 700;
 }
 header nav ul li a:hover {
     color: #ff6600;
+}
+.barra-confianza {
+    background: #fff8f0;
+    border-bottom: 1px solid #ffe0b2;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 12px 10px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #333;
+    flex-wrap: wrap;
+    text-align: center;
 }
 .hero {
     text-align: center;
@@ -106,9 +125,9 @@ header nav ul li a:hover {
     margin: 0;
 }
 .precio {
-    font-weight: bold;
+    font-weight: 900;
     margin: 10px 0;
-    font-size: 18px;
+    font-size: 22px;
     color: #ff6600;
 }
 .card p {
